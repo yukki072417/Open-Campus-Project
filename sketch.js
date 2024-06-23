@@ -18,7 +18,7 @@ var playerBulletGroup;
 
 
 //mission.1 プレイヤーが動くようにしよう！！
-var PlayerSpeed = 5;
+var PlayerSpeed = 0;
 
 
 var BulletSpeed = 7;
@@ -29,12 +29,12 @@ var shottingBulletIntervalTimer = 300;
 
 
 //mission.2 敵を作ろう！！
-var enemyNum = 4;
+var enemyNum = 0;
 
 
 
 //mission.5 BGMをつけよう
-var bgmON = true;
+var bgmON = false;
 
 
 var GameMode = "GameStarting";
@@ -51,7 +51,6 @@ function preload() {
 
 
   //mission.4 なんかおかしい音を変えよう
-  damegeSound = loadSound("assets/sound/Damege.mp3");
 
 
   bgm = loadSound("assets/sound/BGM.mp3");
@@ -162,7 +161,7 @@ function draw() {
     bullet.remove();
 
     //mission.3 敵が倒されたら音をなるようにしよう!!
-    damegeSound.play();
+    
   });
 
   enemyGroup.overlap(player, function (enemy, player) {
