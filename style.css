@@ -1,0 +1,25 @@
+body{
+    margin: 0px;
+    padding: 0px;
+    
+    display: flex;
+}
+.explane{
+    height: 500px;
+    padding-left: 10px;
+    padding-right: 10px;
+
+    margin-top: 70px;
+    margin-left: 30px;
+    margin-right: 30px;
+
+    border-style: solid;
+}
+#credit{
+    padding-top: 30px;
+    text-align: center;
+    font-size: 14px;
+}
+#credit ul{
+    text-align: left;
+}
