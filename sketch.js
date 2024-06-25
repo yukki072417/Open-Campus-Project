@@ -1,9 +1,9 @@
 //Definding some variable
 var player;
-var enemy;
+var enemy = [];
 
 var player_image;
-var enemy_image;
+var enemy_image = [];
 var background_image;
 var playerBullet_image;
 
@@ -30,22 +30,24 @@ var spawndEnemyNum;
 
 //You can assign some speed parameters
 var PlayerSpeed = 5;
-var BulletSpeed = 7;
+var BulletSpeed = 6;
 var EnemySpeed = 4;
 
 //You can assign Max kill count
 var maxKillCount = 10;
 
 //You can assign spawn enemy interval parameters of second
-var spawnEnemyIntervalTimer = 15;
-var shottingBulletIntervalTimer = 3;
+var spawnEnemyIntervalTimer = 1.5;
+var shottingBulletIntervalTimer = 0.3;
 
 //Loading asset data
 function preload() {
-  player_image = loadImage("assets/images/EditedCat.png");
+  playerImage = loadImage("assets/images/player.png")
   playerBullet_image = loadImage("assets/images/Bullet.png");
   background_image = loadImage("assets/images/Background.jpg");
-  enemy_image = loadImage("assets/images/enemy.png");
+
+  enemy_image[0] = loadImage("assets/images/enemy1.png");
+  enemy_image[1] = loadImage("assets/images/enemy2.png");
 
   playerDamegeSound = loadSound("assets/sounds/PlayerDamege.mp3");
   damegeSound = loadSound("assets/sounds/Pagh.mp3");
@@ -57,7 +59,7 @@ function setup() {
   createCanvas(700, 700);
 
   player = createSprite(width / 2, 625);
-  player.addImage(player_image);
+  player.addImage(playerImage);
   player.setCollider();
 
   enemyGroup = new Group();
@@ -73,12 +75,25 @@ function spawnEnemy () {
   if(spawndEnemyNum < enemyNum){
     GameMode == "GameClear"
   }
-    var RondomNum = Math.random() * ((width - 30) - 30);
-    enemy = createSprite(RondomNum, 60);
-    enemy.addImage(enemy_image);
-    enemy.velocity.y = EnemySpeed;
-    enemy.setCollider();
-    enemyGroup.add(enemy);
+    var RondomNum = Math.random() * width - 20;
+    var EnemyRondomNum = Math.round(Math.random() * 1);
+    
+    switch (EnemyRondomNum){
+      case 0:
+        enemy[0] = createSprite(RondomNum, 20);
+        enemy[0].addImage(enemy_image[0]);
+        enemy[0].velocity.y = EnemySpeed;
+        enemy[0].setCollider();
+        enemyGroup.add(enemy[0]);
+        break;
+      case 1:
+        enemy[1] = createSprite(RondomNum, 20);
+        enemy[1].addImage(enemy_image[1]);
+        enemy[1].velocity.y = EnemySpeed;
+        enemy[1].setCollider();
+        enemyGroup.add(enemy[1]);
+        break;
+    }
     spawndEnemyNum++;  
 }
 
@@ -102,8 +117,8 @@ function GameStart(){
 
   if(keyIsDown(13) === true){
     GameMode = "GamePlaying"
-    enemySpawnInterval = setInterval(spawnEnemy,spawnEnemyIntervalTimer * 100);
-    shotInterval = setInterval(shottingBullet,shottingBulletIntervalTimer * 100);
+    enemySpawnInterval = setInterval(spawnEnemy,spawnEnemyIntervalTimer * 1000);
+    shotInterval = setInterval(shottingBullet,shottingBulletIntervalTimer * 1000);
   }
 }
 
@@ -133,6 +148,7 @@ function GameOver(){
 function GameClear(){
   if(killedEnemyTotal >= maxKillCount){
     clearInterval(enemySpawnInterval);
+    clearInterval(shotInterval);
 
     fill(255,255,255);
     rect(0, 210, 699, height/3);
