@@ -20,7 +20,7 @@ var enemyNum = 0;
 var killedEnemyTotal = 0;
 
 //mission.5 BGMをつけよう
-var bgmON = true;
+var bgmON = false;
 
 var GameMode = "GameStarting";
 var enemySpawnInterval;
