@@ -18,23 +18,24 @@ var playerBulletGroup;
 
 var enemyNum = 0;
 var killedEnemyTotal = 0;
-var bgmON = false;
+
+//mission.5 BGMをつけよう
+var bgmON = true;
 
 var GameMode = "GameStarting";
 var enemySpawnInterval;
 var shotInterval;
 var spawndEnemyNum;
 
-
-
-var PlayerSpeed = 5;
-var BulletSpeed = 6;
-var EnemySpeed = 4;
-
-var maxKillCount = 10;
-
-var spawnEnemyIntervalTimer = 1.5;
-var shottingBulletIntervalTimer = 0.3;
+//mission.6 いろいろいじろう!! 
+/*  ----ここからはいじっていいよ----  */
+var PlayerSpeed = 5;  //プレイヤーの動きが変わるよ
+var BulletSpeed = 6; //弾のスピードが変わるよ
+var EnemySpeed = 4;  //敵のスピードが変わるよ
+var maxKillCount = 10;  //目標キル数が変わるよ
+var spawnEnemyIntervalTimer = 1.5; //敵が出現する感覚が変わるよ
+var shottingBulletIntervalTimer = 0.3;  //弾の発射間隔が変わるよ
+/*  ----ここから下はいじらないでね----  */
 
 function preload() {
   playerImage = loadImage("assets/images/player.png")
@@ -45,11 +46,13 @@ function preload() {
   enemy_image[1] = loadImage("assets/images/enemy2.png");
 
   playerDamageSound = loadSound("assets/sounds/PlayerDamage.mp3");
-  damageSound = loadSound("assets/sounds/Pagh.mp3");
+
+  //mission.4 おかしい音を変えよう
+  damageSound = loadSound("assets/sounds/Damage.mp3");
+
   bgm = loadSound("assets/sounds/BGM.mp3");
   winSound = loadSound("assets/sounds/WinSound.mp3");
 }
-
 function setup() {
   createCanvas(700, 700);
 
@@ -65,7 +68,6 @@ function setup() {
     bgm.play();
   }
 }
-
 function spawnEnemy () {
   if(spawndEnemyNum < enemyNum){
     GameMode == "GameClear"
@@ -91,7 +93,6 @@ function spawnEnemy () {
     }
     spawndEnemyNum++;  
 }
-
 function shottingBullet() {
   playerBullet = createSprite(player.position.x, player.position.y - 20);
   playerBullet.addImage(playerBullet_image);
@@ -112,11 +113,10 @@ function GameStart(){
 
   if(keyIsDown(13) === true){
     GameMode = "GamePlaying"
-    
     enemySpawnInterval = setInterval(spawnEnemy,spawnEnemyIntervalTimer * 1000);
 
-    shotInterval = setInterval(shottingBullet,shottingBulletIntervalTimer * 1000);
-
+    //mission.1 弾が発射されるようにしよう
+    
 
   }
 }
@@ -170,6 +170,7 @@ function MovingLeft(){
     player.position.x -= PlayerSpeed;
   }
 }
+
 function MovingRight(){
   if (player.position.x <= 600) {
     player.position.x += PlayerSpeed;
@@ -194,16 +195,18 @@ function draw() {
     GameOver();
   }
 
-  if (keyIsDown(RIGHT_ARROW) === true) {
-    MovingRight();
-  }
+  //mission.2 プレイヤーが左右に動けるようにしよう
 
-  if (keyIsDown(LEFT_ARROW) === true) {
-    MovingLeft();
-  }
+  
+
+
+  
 
   playerBulletGroup.overlap(enemyGroup, function (bullet, enemy) {
+    
+    //mission.3 敵が倒されたら音がなるようにしよう
     damageSound.play();
+    
     enemy.remove();
     bullet.remove();
     killedEnemyTotal++;
