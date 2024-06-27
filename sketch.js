@@ -115,7 +115,6 @@ function GameStart(){
     
     enemySpawnInterval = setInterval(spawnEnemy,spawnEnemyIntervalTimer * 1000);
 
-    //mission.2 
     shotInterval = setInterval(shottingBullet,shottingBulletIntervalTimer * 1000);
 
 
