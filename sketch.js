@@ -165,6 +165,17 @@ function GameClear(){
   }
 }
 
+function MovingLeft(){
+  if (player.position.x >= 60) {
+    player.position.x -= PlayerSpeed;
+  }
+}
+function MovingRight(){
+  if (player.position.x <= 600) {
+    player.position.x += PlayerSpeed;
+  }
+}
+
 function draw() {
   background(220);
 
@@ -184,15 +195,11 @@ function draw() {
   }
 
   if (keyIsDown(RIGHT_ARROW) === true) {
-    if (player.position.x <= 600) {
-      player.position.x += PlayerSpeed;
-    }
+    MovingRight();
   }
 
   if (keyIsDown(LEFT_ARROW) === true) {
-    if (player.position.x >= 60) {
-      player.position.x -= PlayerSpeed;
-    }
+    MovingLeft();
   }
 
   playerBulletGroup.overlap(enemyGroup, function (bullet, enemy) {
