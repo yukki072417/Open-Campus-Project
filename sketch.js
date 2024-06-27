@@ -1,4 +1,3 @@
-//Definding some variable
 var player;
 var enemy = [];
 
@@ -8,8 +7,8 @@ var background_image;
 var playerBullet_image;
 
 var bgm;
-var damegeSound;
-var playerDamegeSound;
+var damageSound;
+var playerDamageSound;
 var winSound;
 
 var playerBullet;
@@ -28,19 +27,15 @@ var spawndEnemyNum;
 
 
 
-//You can assign some speed parameters
 var PlayerSpeed = 5;
 var BulletSpeed = 6;
 var EnemySpeed = 4;
 
-//You can assign Max kill count
 var maxKillCount = 10;
 
-//You can assign spawn enemy interval parameters of second
 var spawnEnemyIntervalTimer = 1.5;
 var shottingBulletIntervalTimer = 0.3;
 
-//Loading asset data
 function preload() {
   playerImage = loadImage("assets/images/player.png")
   playerBullet_image = loadImage("assets/images/Bullet.png");
@@ -49,8 +44,8 @@ function preload() {
   enemy_image[0] = loadImage("assets/images/enemy1.png");
   enemy_image[1] = loadImage("assets/images/enemy2.png");
 
-  playerDamegeSound = loadSound("assets/sounds/PlayerDamege.mp3");
-  damegeSound = loadSound("assets/sounds/Pagh.mp3");
+  playerDamageSound = loadSound("assets/sounds/PlayerDamage.mp3");
+  damageSound = loadSound("assets/sounds/Pagh.mp3");
   bgm = loadSound("assets/sounds/BGM.mp3");
   winSound = loadSound("assets/sounds/WinSound.mp3");
 }
@@ -117,8 +112,12 @@ function GameStart(){
 
   if(keyIsDown(13) === true){
     GameMode = "GamePlaying"
+    
     enemySpawnInterval = setInterval(spawnEnemy,spawnEnemyIntervalTimer * 1000);
+
     shotInterval = setInterval(shottingBullet,shottingBulletIntervalTimer * 1000);
+
+
   }
 }
 
@@ -166,10 +165,20 @@ function GameClear(){
   }
 }
 
+function MovingLeft(){
+  if (player.position.x >= 60) {
+    player.position.x -= PlayerSpeed;
+  }
+}
+function MovingRight(){
+  if (player.position.x <= 600) {
+    player.position.x += PlayerSpeed;
+  }
+}
+
 function draw() {
   background(220);
 
-  //Loading background image
   image(background_image, 0, 0);
 
   fill(255,255,255);
@@ -186,29 +195,23 @@ function draw() {
   }
 
   if (keyIsDown(RIGHT_ARROW) === true) {
-    if (player.position.x <= 600) {
-      player.position.x += PlayerSpeed;
-    }
+    MovingRight();
   }
 
   if (keyIsDown(LEFT_ARROW) === true) {
-    if (player.position.x >= 60) {
-      player.position.x -= PlayerSpeed;
-    }
+    MovingLeft();
   }
 
-  //Judging enemy collision
   playerBulletGroup.overlap(enemyGroup, function (bullet, enemy) {
-    damegeSound.play();
+    damageSound.play();
     enemy.remove();
     bullet.remove();
     killedEnemyTotal++;
 
   });
 
-  //Judging player collision
   enemyGroup.overlap(player, function (enemy, player) {
-    playerDamegeSound.play();
+    playerDamageSound.play();
     player.remove();
     enemy.remove();
     GameMode = "GameOver"
