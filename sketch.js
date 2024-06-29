@@ -48,7 +48,7 @@ function preload() {
   playerDamageSound = loadSound("assets/sounds/PlayerDamage.mp3");
 
   //mission.4 おかしい音を変えよう
-  damageSound = loadSound("assets/sounds/Damage.mp3");
+  damageSound = loadSound("assets/sounds/Pagh.mp3");
 
   bgm = loadSound("assets/sounds/BGM.mp3");
   winSound = loadSound("assets/sounds/WinSound.mp3");
